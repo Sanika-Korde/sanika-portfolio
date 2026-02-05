@@ -1,4 +1,6 @@
 const navLinks = document.querySelectorAll(".nav-links a");
+const navMenu = document.querySelector(".nav-links");
+const menuToggle = document.querySelector(".menu-toggle");
 
 navLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
@@ -6,8 +8,21 @@ navLinks.forEach((link) => {
     if (!target) return;
     event.preventDefault();
     target.scrollIntoView({ behavior: "smooth" });
+    if (navMenu) {
+      navMenu.classList.remove("is-open");
+    }
+    if (menuToggle) {
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
   });
 });
+
+if (menuToggle && navMenu) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = navMenu.classList.toggle("is-open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
 
 const sections = document.querySelectorAll("main section[id]");
 const observer = new IntersectionObserver(
