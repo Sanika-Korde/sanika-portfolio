@@ -7,6 +7,7 @@
   --primary: #6b5bff;
   --primary-soft: #e4dcff;
   --accent: #8a63ff;
+  --icon-accent: #6c63ff;
   --border: rgba(15, 23, 42, 0.08);
   --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
   --radius: 22px;
@@ -284,6 +285,47 @@ img {
 
 .social svg {
   width: 20px;
+}
+
+.icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.icon-tint {
+  filter:
+    brightness(0) saturate(100%)
+    invert(41%) sepia(88%) saturate(1640%)
+    hue-rotate(199deg) brightness(100%) contrast(101%)
+    drop-shadow(0 2px 4px rgba(46, 122, 219, 0.25));
+}
+
+.icon-mask {
+  width: 24px;
+  height: 24px;
+  background-color: var(--icon-accent);
+  -webkit-mask: var(--icon-mask) no-repeat center / contain;
+  mask: var(--icon-mask) no-repeat center / contain;
+  display: block;
+}
+
+@supports not (mask: url("")) {
+  .icon-mask {
+    background-color: transparent;
+    -webkit-mask: none;
+    mask: none;
+    background-image: var(--icon-mask);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
+
+.social .icon-img {
+  width: 22px;
+  height: 22px;
 }
 
 .scroll-indicator {
