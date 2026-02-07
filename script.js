@@ -24,18 +24,26 @@ if (menuToggle && navMenu) {
   });
 }
 
-const sections = document.querySelectorAll("main section[id]");
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      const id = entry.target.getAttribute("id");
-      navLinks.forEach((link) => {
-        link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
-      });
-    });
-  },
-  { rootMargin: "-40% 0px -50% 0px", threshold: 0.1 }
-);
+const sections = Array.from(document.querySelectorAll("main section[id]"));
 
-sections.forEach((section) => observer.observe(section));
+const setActiveLink = (id) => {
+  navLinks.forEach((link) => {
+    link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+  });
+};
+
+const handleScroll = () => {
+  const offset = 120;
+  let current = sections[0]?.id;
+  sections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top - offset <= 0 && rect.bottom - offset > 0) {
+      current = section.id;
+    }
+  });
+  if (current) setActiveLink(current);
+};
+
+window.addEventListener("scroll", handleScroll, { passive: true });
+window.addEventListener("resize", handleScroll);
+handleScroll();
